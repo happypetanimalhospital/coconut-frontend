@@ -1,23 +1,20 @@
-import logo from './logo.svg';
 import './App.css';
+import { useRoutes } from 'react-router-dom';
+import routes from './routes';
+import jwt from 'jsonwebtoken';
+import { useEffect, useState } from 'react';
 
 function App() {
+	const [ profile, setProfile ] = useState();
+  const routing = useRoutes(routes(profile));
+
+  useEffect(() => {
+    setProfile(jwt.decode(localStorage.getItem('jwtToken')))
+    console.log('aa',jwt.decode(localStorage.getItem('jwtToken')) )
+	}, []);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {routing}
     </div>
   );
 }
